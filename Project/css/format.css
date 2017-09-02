@@ -1,0 +1,50 @@
+@charset "utf-8";
+/* CSS Document */
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+
+.form, .container {
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+ text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+p{
+margin: 0px;
+}
+.row1{
+	padding-left:40px;
+	padding-right:40px;
+}
+.row2{
+	padding-top:20px;
+	padding-bottom:20px;
+}
+ input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: white;
+max-width: 80%; 
+margin-right: auto;
+	 margin-left:auto;
+	 margin-bottom: 00px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+
+.container {
+ max-width: 400px;
+  margin: auto;
+}
+
+
+
+
+

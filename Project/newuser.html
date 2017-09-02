@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+		<head>
+		<meta charset="utf-8">
+		<title>Nebula</title>
+	
+		<link rel="stylesheet"  type="text/css" href="css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="css/format.css">
+			<link rel="stylesheet" href="css/validate.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script>
+
+			function validatePassword(){
+
+				var confirmPassword = document.getElementById("confirmPassword");
+				var password = document.getElementById("password");
+
+				if(password.value != confirmPassword.value) {
+					confirmPassword.setCustomValidity("Passwords Don't Match");
+					
+				}
+				else {
+					confirmPassword.setCustomValidity('');
+				}
+			}
+
+			function validateUsername(){
+
+			}
+
+			var inside="";
+
+			$(document).ready(function() {
+
+				var password = document.getElementById("password");
+				var confirmPassword = document.getElementById("confirmPassword");
+				var username = document.getElementById('username');
+				var usernameinfo = document.getElementById('usernameinfo');
+				username.onkeyup = checkUsername;
+				confirmPassword.onkeyup = validatePassword;
+				$("#usernameinfo").addClass("error");
+
+				$("#username").focus(function(){
+				
+				});
+
+				$("#username").blur(function(){
+				checkUsername();
+					
+				});
+
+				$("#password").focus(function(){
+					
+					$("#passwordinfo").empty();
+					$("#passwordinfo").removeClass();
+					$("#passwordinfo").append("Eight characters long, alpha-numeric.");
+					$("#passwordinfo").addClass("info");
+				});
+					
+				$("#password").blur(function(){
+					$("#passwordinfo").empty();
+					$("#passwordinfo").removeClass();
+					if ($("#password").val().length>0){
+						checkPassword($("#password").val());
+					}
+				});
+					
+				$("#confirmPassword").focus(function(){
+					$("#confirmpasswordinfo").empty();
+					$("#confirmpasswordinfo").removeClass();
+					
+				});
+					
+				$("#confirmPassword").blur(function(){
+					$("#confirmpasswordinfo").empty();
+					$("#confirmpasswordinfo").removeClass();
+					if ($("#confirmPassword").val().length>0){
+						if($("#password").val() != $("#confirmPassword").val()) {
+							$("#confirmpasswordinfo").append("  Passwords do not match");
+							$("#confirmpasswordinfo").addClass("error");
+						} 
+					}
+				});
+			});
+				
+			function checkUsername(){
+				var username = document.getElementById('username');
+
+				if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
+			    	xmlhttp=new XMLHttpRequest();
+				}
+				else{// code for IE6, IE5
+			    	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				xmlhttp.onreadystatechange=function(){
+				    if (xmlhttp.readyState==4){
+				       $("#usernameinfo").html(xmlhttp.responseText);
+					if($("#usernameinfo").html().toString().includes("EXIST")){
+						$("#username").get(0).setCustomValidity("Choose other ID");
+					}
+					else {
+						username.setCustomValidity('');
+					}
+				    }
+				}
+				xmlhttp.open("GET","./checkusername.php?username="+username.value,true);
+				xmlhttp.send();
+			}
+
+			function checkPassword(password){
+				var re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+				if( re.test(password)){
+				$("#password").get(0).setCustomValidity('');
+				
+				}
+				else{
+				$("#passwordinfo").append("  Weak Password");
+				$("#passwordinfo").addClass("error");
+				$("#password").get(0).setCustomValidity("Weak Password");
+				
+				}
+			}
+		</script>
+		</head>
+		<body>
+
+<div class="container well">
+          <div class="row">
+    <form method="post" action="registeruser.php">
+              <fieldset>
+        <div class="row2">
+                  <legend>New User</legend>
+                  <input class="form-control " type="text" name="username" id="username" placeholder="Username"/>
+                  <p> <span id="usernameinfo"></span><br>
+          </p>
+                  <input class="form-control " type="password" name="password" id="password" placeholder="Password"/>
+                  <p> <span id="passwordinfo"></span><br>
+          </p>
+                  <input class="form-control " type="password" name="confirmpassword" id="confirmPassword" placeholder="Re-enter Password"/>
+                  <p> <span id="confirmpasswordinfo"></span><br>
+          </p>
+                </div>
+        <div class="row1">
+                  <div class="col-sm-12">
+            <input class="form-control  " type="submit" value="Create">
+          </div>
+                  
+                </div>
+      </fieldset>
+            </form>
+  </div>
+        </div>
+</body>
+</html>
